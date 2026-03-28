@@ -22,7 +22,7 @@ const itemVariants = {
   },
 };
 
-const clientLogos = Array.from({ length: 5 });
+const clientLogos = ["Vertex", "Meridian", "Atlas", "NovaTech", "Skyline"];
 
 type HeroData = {
   badge_text: string;
@@ -113,14 +113,15 @@ export default function Hero({ data }: { data?: HeroData }) {
             <p className="text-sm text-slate-400 font-medium">
               {data?.trust_text || "Trusted by 200+ businesses across the US"}
             </p>
-            <div className="flex items-center gap-3 flex-wrap justify-center">
-              {clientLogos.map((_, i) => (
-                <div
-                  key={i}
-                  className="h-8 rounded-md bg-slate-100"
-                  style={{ width: `${64 + (i % 3) * 16}px` }}
+            <div className="flex items-center gap-6 flex-wrap justify-center">
+              {clientLogos.map((name) => (
+                <span
+                  key={name}
+                  className="text-sm font-semibold text-slate-300 tracking-wide uppercase select-none"
                   aria-hidden="true"
-                />
+                >
+                  {name}
+                </span>
               ))}
             </div>
           </motion.div>
