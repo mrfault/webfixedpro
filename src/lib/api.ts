@@ -40,6 +40,11 @@ export async function getSettings() {
   return data.data;
 }
 
+export async function getPage(slug: string) {
+  const data = await fetchAPI(`/pages/${slug}`);
+  return data.data;
+}
+
 export async function submitContact(formData: { name: string; email: string; message: string }) {
   const res = await fetch(`${API_BASE}/contact`, {
     method: 'POST',

@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 type Settings = Record<string, Record<string, string>> | null;
 
 const quickLinks = [
@@ -126,18 +128,18 @@ export default function Footer({ settings }: { settings?: Settings }) {
             {copyright}
           </p>
           <div className="flex items-center gap-6">
-            <a
-              href="#"
+            <Link
+              href="/privacy-policy"
               className="text-slate-500 text-xs hover:text-slate-300 transition-colors duration-150"
             >
               Privacy Policy
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/terms-of-service"
               className="text-slate-500 text-xs hover:text-slate-300 transition-colors duration-150"
             >
               Terms of Service
-            </a>
+            </Link>
           </div>
         </div>
       </div>

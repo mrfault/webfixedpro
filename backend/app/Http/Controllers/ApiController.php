@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ContactSubmission;
 use App\Models\HeroSection;
+use App\Models\Page;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\SiteSetting;
@@ -71,6 +72,19 @@ class ApiController extends Controller
             });
 
         return response()->json(['data' => $settings]);
+    }
+
+    public function page(string $slug): JsonResponse
+    {
+        $page = Page::where('slug', $slug)->where('is_published', true)->firstOrFail();
+
+        return response()->json([
+            'data' => [
+                'title' => $page->title,
+                'slug' => $page->slug,
+                'content' => $page->content,
+            ],
+        ]);
     }
 
     public function submitContact(Request $request): JsonResponse

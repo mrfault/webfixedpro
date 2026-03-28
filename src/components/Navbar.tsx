@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -16,9 +17,14 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const pathname = usePathname();
+  const router = useRouter();
+  const isHome = pathname === "/";
 
   const handleScroll = useCallback(() => {
     setIsScrolled(window.scrollY > 20);
+
+    if (!isHome) return;
 
     const sections = navLinks.map((l) => l.href.replace("#", ""));
     for (const id of [...sections].reverse()) {
@@ -28,7 +34,7 @@ export default function Navbar() {
         break;
       }
     }
-  }, []);
+  }, [isHome]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -37,8 +43,12 @@ export default function Navbar() {
 
   const scrollTo = (href: string) => {
     setIsMobileOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (isHome) {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      router.push("/" + href);
+    }
   };
 
   return (
@@ -61,7 +71,14 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <button
-              onClick={() => scrollTo("#hero")}
+              onClick={() => {
+                setIsMobileOpen(false);
+                if (isHome) {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                } else {
+                  router.push("/");
+                }
+              }}
               className="flex items-center gap-1.5 cursor-pointer group"
               aria-label="WebFixedPro home"
             >

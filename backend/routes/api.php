@@ -15,4 +15,5 @@ Route::prefix('v1')->group(function () {
     Route::get('/testimonials', [ApiController::class, 'testimonials']);
     Route::get('/settings', [ApiController::class, 'settings']);
     Route::post('/contact', [ApiController::class, 'submitContact']);
+    Route::get('/pages/{slug}', [ApiController::class, 'page']);
 });
